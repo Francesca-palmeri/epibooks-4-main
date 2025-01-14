@@ -42,8 +42,8 @@ const CommentArea = function (props) {
 
   useEffect(() => {
     const fetchComments = async () => {
-      setIsLoading(true) 
-      setIsError(false) 
+      setIsLoading(true)
+      setIsError(false)
 
       try {
         let response = await fetch(
@@ -58,18 +58,20 @@ const CommentArea = function (props) {
 
         if (response.ok) {
           let data = await response.json()
-          setComments(data) 
+          setComments(data)
         } else {
-          setIsError(true) 
+          setIsError(true)
+        }
       } catch (error) {
         console.error(error)
-        setIsError(true) 
+        setIsError(true)
       } finally {
-        setIsLoading(false) 
+        setIsLoading(false)
+      }
     }
 
-    fetchComments() 
-  }, [props.asin]) 
+    fetchComments()
+  }, [props.asin])
 
   return (
     <div className="text-center">
