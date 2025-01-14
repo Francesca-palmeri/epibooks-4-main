@@ -42,8 +42,8 @@ const CommentArea = function (props) {
 
   useEffect(() => {
     const fetchComments = async () => {
-      setIsLoading(true) // Set loading state to true while fetching
-      setIsError(false) // Reset error state
+      setIsLoading(true) 
+      setIsError(false) 
 
       try {
         let response = await fetch(
@@ -58,20 +58,18 @@ const CommentArea = function (props) {
 
         if (response.ok) {
           let data = await response.json()
-          setComments(data) // Set the comments to state
+          setComments(data) 
         } else {
-          setIsError(true) // If there's an error, set the error state
-        }
+          setIsError(true) 
       } catch (error) {
         console.error(error)
-        setIsError(true) // If an error occurs during fetch, set error state
+        setIsError(true) 
       } finally {
-        setIsLoading(false) // Stop loading after the fetch attempt
-      }
+        setIsLoading(false) 
     }
 
-    fetchComments() // Call the function to fetch comments when the component mounts or asin changes
-  }, [props.asin]) // Dependency array: the effect will re-run when props.asin changes
+    fetchComments() 
+  }, [props.asin]) 
 
   return (
     <div className="text-center">
