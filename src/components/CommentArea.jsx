@@ -1,8 +1,8 @@
-import { Component } from 'react'
-import CommentList from './CommentList'
-import AddComment from './AddComment'
-import Loading from './Loading'
-import Error from './Error'
+import { Component } from "react"
+import CommentList from "./CommentList"
+import AddComment from "./AddComment"
+import Loading from "./Loading"
+import Error from "./Error"
 
 class CommentArea extends Component {
   state = {
@@ -44,11 +44,12 @@ class CommentArea extends Component {
       })
       try {
         let response = await fetch(
-          'https://striveschool-api.herokuapp.com/api/comments/' +
+          "https://striveschool-api.herokuapp.com/api/comments/" +
             this.props.asin,
           {
             headers: {
-              Authorization: 'Bearer inserisci-qui-il-tuo-token',
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzU4NzBmYzA3ZGI3MzAwMTU0MDYzYWMiLCJpYXQiOjE3MzY4NjY5OTEsImV4cCI6MTczODA3NjU5MX0.AKNrvfgqZ0YM6Ga_Z_wLcGUQPnMGTsxQytDXnfnrtvk",
             },
           }
         )
