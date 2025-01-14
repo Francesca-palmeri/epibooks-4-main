@@ -4,50 +4,17 @@ import AddComment from "./AddComment"
 import Loading from "./Loading"
 import Error from "./Error"
 
-const CommentArea = function (props) {
+const CommentArea = ({ asin }) => {
   const { comments, setComments } = useState([])
   const { isLoading, setIsLoading } = useState(false)
   const { isError, setIsError } = useState(false)
-  /* state = {
-    comments: [],
-    isLoading: false,
-    isError: false,
-  } */
-
-  // componentDidMount = async () => {
-  //   try {
-  //     let response = await fetch(
-  //       'https://striveschool-api.herokuapp.com/api/comments/' +
-  //         this.props.asin,
-  //       {
-  //         headers: {
-  //           Authorization:
-  //             'Bearer inserisci-qui-il-tuo-token',
-  //         },
-  //       }
-  //     )
-  //     console.log(response)
-  //     if (response.ok) {
-  //       let comments = await response.json()
-  //       this.setState({ comments: comments, isLoading: false, isError: false })
-  //     } else {
-  //       console.log('error')
-  //       this.setState({ isLoading: false, isError: true })
-  //     }
-  //   } catch (error) {
-  //     console.log(error)
-  //     this.setState({ isLoading: false, isError: true })
-  //   }
-  // }
 
   useEffect(() => {
-    const fetchComments = async () => {
+    const getComments = async () => {
       setIsLoading(true)
-      setIsError(false)
-
       try {
         let response = await fetch(
-          "https://striveschool-api.herokuapp.com/api/comments/" + props.asin,
+          "https://striveschool-api.herokuapp.com/api/comments/" + asin,
           {
             headers: {
               Authorization:
@@ -55,29 +22,33 @@ const CommentArea = function (props) {
             },
           }
         )
-
+        console.log(response)
         if (response.ok) {
-          let data = await response.json()
-          setComments(data)
+          let comments = await response.json()
+          setComments(comments)
+          setIsLoading(false)
+          setIsError(false)
         } else {
+          console.log("error")
+          setIsLoading(false)
           setIsError(true)
         }
       } catch (error) {
-        console.error(error)
-        setIsError(true)
-      } finally {
+        console.log(error)
         setIsLoading(false)
+        setIsError(true)
       }
     }
-
-    fetchComments()
-  }, [props.asin])
+    if (asin) {
+      getComments()
+    }
+  }, [asin])
 
   return (
     <div className="text-center">
       {isLoading && <Loading />}
       {isError && <Error />}
-      <AddComment asin={props.asin} />
+      <AddComment asin={asin} />
       <CommentList commentsToShow={comments} />
     </div>
   )

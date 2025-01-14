@@ -1,37 +1,19 @@
 import { useEffect, useState } from "react"
 import { Button, Form } from "react-bootstrap"
 
-const AddComment = function (props) {
-  //state = {
-  //  comment: {
-  //    comment: '',
-  //    rate: 1,
-  //    elementId: this.props.asin,
-  //  },
-  //}
+const AddComment = ({ asin }) => {
   const [comment, setComment] = useState({
     comment: "",
     rate: 1,
-    elementId: props.asin,
+    elementId: null,
   })
 
   useEffect(() => {
-    if (props.asin !== comment.elementId) {
-      setComment((prevComment) => ({
-        ...prevComment,
-        elementId: props.asin,
-      }))
-    }
-  }, [props.asin])
-
-  //componentDidUpdate(prevProps) {
-  //  if (prevProps.asin !== this.props.asin) {
-  //    this.setState({
-  //      comment: {
-  //        ...this.state.comment,
-  //        elementId: this.props.asin,
-  //      },
-  //    })
+    setComment((c) => ({
+      ...c,
+      elementId: asin,
+    }))
+  }, [asin])
 
   const sendComment = async (e) => {
     e.preventDefault()
@@ -53,7 +35,7 @@ const AddComment = function (props) {
         setComment({
           comment: "",
           rate: 1,
-          elementId: props.asin,
+          elementId: null,
         })
       } else {
         throw new Error("Qualcosa è andato storto")
@@ -72,18 +54,11 @@ const AddComment = function (props) {
             type="text"
             placeholder="Inserisci qui il testo"
             value={comment.comment}
-            onChange={
-              (e) =>
-                setComment({
-                  ...comment,
-                  comment: e.target.value,
-                })
-              /* this.setState({
-                comment: {
-                  ...this.state.comment,
-                  comment: e.target.value,
-                },
-              }) */
+            onChange={(e) =>
+              setComment({
+                ...comment,
+                comment: e.target.value,
+              })
             }
           />
         </Form.Group>
@@ -92,18 +67,11 @@ const AddComment = function (props) {
           <Form.Control
             as="select"
             value={comment.rate}
-            onChange={
-              (e) =>
-                setComment({
-                  ...comment,
-                  rate: e.target.value,
-                })
-              /* this.setState({
-                comment: {
-                  ...this.state.comment,
-                  rate: e.target.value,
-                },
-              }) */
+            onChange={(e) =>
+              setComment({
+                ...comment,
+                rate: e.target.value,
+              })
             }
           >
             <option>1</option>
